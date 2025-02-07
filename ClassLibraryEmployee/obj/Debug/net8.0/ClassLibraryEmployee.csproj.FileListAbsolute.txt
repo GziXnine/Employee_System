@@ -10,3 +10,4 @@ F:\Repos\Employee System\ClassLibraryEmployee\obj\Debug\net8.0\ClassLibraryEmplo
 F:\Repos\Employee System\ClassLibraryEmployee\obj\Debug\net8.0\refint\ClassLibraryEmployee.dll
 F:\Repos\Employee System\ClassLibraryEmployee\obj\Debug\net8.0\ClassLibraryEmployee.pdb
 F:\Repos\Employee System\ClassLibraryEmployee\obj\Debug\net8.0\ref\ClassLibraryEmployee.dll
+F:\Repos\Employee System\ClassLibraryEmployee\obj\Debug\net8.0\ClassLibraryEmployee.csproj.AssemblyReference.cache
