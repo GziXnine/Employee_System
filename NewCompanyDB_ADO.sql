@@ -1,7 +1,7 @@
-CREATE DATABASE CompanyDB_ADO
+CREATE DATABASE NewCompanyDB_ADO
 GO
 
-USE CompanyDB_ADO
+USE NewCompanyDB_ADO
 GO
 
 CREATE TABLE Departments (
@@ -24,7 +24,10 @@ VALUES
     ('Engineering'),
     ('Marketing'),
     ('Finance'),
-    ('IT Support');
+    ('IT Support'),
+	('Sales'),
+    ('Customer Support'),
+    ('Research & Development');
 
 INSERT INTO Employees (EmployeeName, EmployeeSalary, EmployeeGender, DepartmentID) 
 VALUES
@@ -34,7 +37,10 @@ VALUES
     ('Diana White', 8000, 'Female', 4),    -- Finance
     ('Ethan Carter', 6000, 'Male', 5),     -- IT Support
     ('Fiona Green', 7500, 'Female', 2),    -- Engineering
-    ('George Black', 5000, 'Male', 1);     -- HR
+    ('George Black', 5000, 'Male', 1),     -- HR
+	('Hannah Blue', 6200, 'Female', 5),    -- IT Support
+    ('Isaac Gray', 6800, 'Male', 6),       -- Sales
+    ('Jennifer Violet', 7200, 'Female', 7);-- Customer Support
 
 -- View Data
 SELECT * FROM Departments;

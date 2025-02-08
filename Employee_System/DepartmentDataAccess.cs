@@ -15,10 +15,36 @@ namespace Employee_System
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    Console.WriteLine("\nAvailable Departments:");
-                    Console.WriteLine("----------------------");
+                    List<(int, string)> departments = new List<(int, string)>();
+
                     while (reader.Read())
-                        Console.WriteLine($"ID: {reader["DepartmentID"]}, Name: {reader["DepartmentName"]}");
+                    {
+                        int id = reader.GetInt32(0);
+                        string name = reader.GetString(1);
+                        departments.Add((id, name));
+                    }
+
+                    if (departments.Count == 0)
+                    {
+                        Console.WriteLine("No departments found.");
+                        Console.ReadKey();
+                        return;
+                    }
+
+                    Console.Clear();
+                    Console.WriteLine("╔══════════════╦════════════════════════════════╗");
+                    Console.WriteLine("║ DepartmentID ║         Department Name        ║");
+                    Console.WriteLine("╠══════════════╬════════════════════════════════╣");
+
+                    foreach (var dept in departments)
+                    {
+                        Console.WriteLine($"║ {dept.Item1,-12} ║ {dept.Item2,-30} ║");
+                    }
+
+                    Console.WriteLine("╚══════════════╩════════════════════════════════╝");
+
+                    Console.WriteLine("\nPress any key to return...");
+                    Console.ReadKey();
                 }
             }
         }
@@ -60,6 +86,44 @@ namespace Employee_System
                     return newDeptID;
                 }
             }
+        }
+
+        public static void DeleteDepartment()
+        {
+            Console.Write("Enter Department ID to delete: ");
+            if (!int.TryParse(Console.ReadLine(), out int id) || id <= 0)
+            {
+                Console.WriteLine("Invalid Department ID! Press any key to return...");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.Write($"Are you sure you want to delete Department ID {id}? (Y / N): ");
+            string? confirmation = Console.ReadLine()?.Trim().ToUpper();
+
+            if (confirmation != "Y")
+            {
+                Console.WriteLine("Deletion cancelled.");
+                Console.ReadKey();
+                return;
+            }
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = "DELETE FROM Departments WHERE DepartmentID = @ID";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@ID", id);
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                        Console.WriteLine("Department successfully deleted!");
+                    else
+                        Console.WriteLine("Department not found or deletion failed.");
+                }
+            }
+            Console.ReadKey();
         }
     }
 }

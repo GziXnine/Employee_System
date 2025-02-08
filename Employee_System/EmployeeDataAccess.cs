@@ -12,10 +12,12 @@ public static class EmployeeDataAccess
         {
             string query = "INSERT INTO Employees (EmployeeName, EmployeeSalary, DepartmentID, EmployeeGender) VALUES (@Name, @Salary, @DepartmentID, @Gender);";
             SqlCommand cmd = new SqlCommand(query, conn);
+
             cmd.Parameters.AddWithValue("@Name", employee.EmployeeName);
             cmd.Parameters.AddWithValue("@Salary", employee.EmployeeSalary);
             cmd.Parameters.AddWithValue("@DepartmentID", employee.DepartmentID);
             cmd.Parameters.AddWithValue("@Gender", employee.EmployeeGender.ToString());
+
             conn.Open();
             cmd.ExecuteNonQuery();
         }
@@ -46,5 +48,22 @@ public static class EmployeeDataAccess
         }
 
         return employees;
+    }
+
+    public static bool DeleteEmployee(int id)
+    {
+        using (SqlConnection conn = new SqlConnection(connectionString))
+        {
+            conn.Open();
+            string query = "DELETE FROM Employees WHERE EmployeeID = @ID";
+
+            using (SqlCommand cmd = new SqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@ID", id);
+                int rowsAffected = cmd.ExecuteNonQuery();
+
+                return rowsAffected > 0; // Returns true if at least one row was deleted
+            }
+        }
     }
 }
